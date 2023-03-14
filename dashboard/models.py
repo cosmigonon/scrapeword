@@ -2,40 +2,52 @@ from django.db import models
 from django.contrib.auth.models import User 
 
 
-
-
-
 class Language(models.Model):
     language_name = models.CharField(max_length=20)
-    language_code = models.CharField(max_length=5, primary_key=True)
-
+    language_code = models.CharField(max_length=5)
     class Meta:
         db_table = 'language'
 
 
-class WordVocabulary(models.Model):
+class GlossaryWord(models.Model):
     word = models.TextField()
-    languague_code = models.ForeignKey(Language, on_delete=models.CASCADE)
-
+    languague = models.OneToOneField(Language, on_delete=models.CASCADE)
+    grammatical_category = models.TextField() 
     class Meta:
-        db_table = 'word_vocabulary'
-    
+        db_table = 'glossary_word'
 
-class ExpressionsVocabulary(models.Model):
+
+class UserGlossaryWord(models.Model):
+    word = models.ManyToManyField(User, GlossaryWord)
+    class Meta:
+        db_table = 'user_glossary_word' 
+
+
+class GlossarySentence(models.Model):
     sentence = models.TextField()
-
+    languague = models.OneToOneField(Language, on_delete=models.CASCADE)
     class Meta:
         db_table = 'expressions_vocabulary'
 
 
-class TranslatedWords(models.Model):
-    
-    
+class UserGlossarySentence(models.Model):
+    sentence = models.ManyToManyField(User,GlossarySentence)
     class Meta:
-        db_table = 'translated_words'
+        db_table = 'user_glossary_sentence'
 
-class TranslatedExpressions(models.Model):
 
+class TransWord(models.Model):
+    translated_word = models.TextField()
+    language = models.OneToOneField(Language, on_delete=models.CASCADE) 
+    word = models.ForeignKey(GlossaryWord, on_delete=models.CASCADE)
     class Meta:
-        db_table = 'translated_expressions'
+        db_table = 'translated_glossary_word'
+
+
+class TransSentence(models.Model):
+    translated_sentence = models.TextField()
+    language = models.OneToOneField(Language, on_delete=models.CASCADE) 
+    sentence = models.OneToOneField(GlossarySentence, on_delete=models.CASCADE)
+    class Meta:
+        db_table = 'translated_glossary_sentence'
 
