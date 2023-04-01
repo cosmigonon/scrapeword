@@ -1,0 +1,46 @@
+<!DOCTYPE html> 
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Scrapeword{% endblock %}</title>
+  </head>
+  <body>
+    <div id="navbar">
+      <header class="masthead" role="banner">
+        <div class="logo-container">
+          <a href="#">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 190 35" width="190" height="35">
+              <text x="0" y="20" style="font-family: 'Sono', sans-serif; font-size: 24">
+                Scrapeword
+              </text>
+            </svg>
+          </a>
+        </div>
+        <div class="searhbox-vocabulary" role="searchbox">
+          <form autocomplete="on">
+            <input type="search" placeholder="Search" id="query" name="q" />
+            <button title="Search">Search</button>
+          </form>
+        </div>
+        <nav class="menu" role="navigation">
+          <ul class="nav-links">
+            <li><a href="#home" title="Home">Home</a></li>
+            <li><a href="#create" title="Create">Create</a></li>
+          </ul>
+          <a class="account" href="#account"><button>Account</button></a>
+        </nav>
+      </header>
+    </div>
+    
+    <div class="content">
+      {% block content %} 
+      
+      {% endblock %}
+    </div>
+    <footer>
+      <a href="https://github.com/cosmigonon" target="_blank"><p><small> Designed & Built by Jhon J</small></p></a>
+    </footer>
+  </body>
+</html>
