@@ -1,3 +1,10 @@
 {% extends "base.html" %} {% block content %}
 <h1>My vocabulary</h1>
+<ul>
+  {% for words in words_list %}
+  <li>{{ words.deck_id }} {{ words.source_language }}</li>
+  {% empty %}
+  <li>You have not added new vocabulary yet</li>
+  {% endfor %}
+</ul>
 {% endblock %}
