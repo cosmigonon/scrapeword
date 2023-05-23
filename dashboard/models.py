@@ -7,6 +7,7 @@ class UserDeck(models.Model):
     deck_name = models.CharField(verbose_name="deck name", max_length=100)
     deck_template = models.TextField(verbose_name="template", blank=True, null=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    slug = models.SlugField(null=False, unique=True)
 
     class Meta:
         db_table = "user_deck"
@@ -17,12 +18,14 @@ class UserDeck(models.Model):
         return self.deck_name
 
     def get_absolute_url(self):
-        return reverse("deck_detail", kwargs={"pk": self.pk})
+        return reverse("deck_detail", kwargs={"slug": self.slug})
 
 
 class UserGlossary(models.Model):
     vocabulary = models.CharField(max_length=5000)
     source_language = models.CharField(max_length=50)
+    translation = models.TextField(blank=True, null=True)
+    target_language = models.CharField(max_length=50)
     grammatical_category = models.CharField(max_length=50, blank=True, null=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     deck = models.ForeignKey(UserDeck, on_delete=models.CASCADE)
@@ -30,6 +33,7 @@ class UserGlossary(models.Model):
     word = models.BooleanField(blank=True)
     sentence = models.BooleanField(blank=True)
     date = models.DateField(verbose_name="date added", auto_now=True)
+    slug = models.SlugField(null=False, unique=True)
 
     class Meta:
         db_table = "user_glossary"
@@ -40,7 +44,7 @@ class UserGlossary(models.Model):
         return self.vocabulary
 
     def get_absolute_url(self):
-        return reverse("glossary_detail", kwargs={"pk": self.pk})
+        return reverse("glossary_detail", kwargs={"slug": self.slug})
 
 
 class TransGlossary(models.Model):
