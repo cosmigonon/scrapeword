@@ -20,80 +20,44 @@ class UserDeck(models.Model):
         return reverse("deck_detail", kwargs={"pk": self.pk})
 
 
-class GlossaryWord(models.Model):
-    word = models.CharField(max_length=100)
-    source_language = models.CharField(max_length=2)
+class UserGlossary(models.Model):
+    vocabulary = models.CharField(max_length=5000)
+    source_language = models.CharField(max_length=50)
     grammatical_category = models.CharField(max_length=50, blank=True, null=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     deck = models.ForeignKey(UserDeck, on_delete=models.CASCADE)
     tag = models.CharField(max_length=50, blank=True, null=True)
+    word = models.BooleanField(blank=True)
+    sentence = models.BooleanField(blank=True)
     date = models.DateField(verbose_name="date added", auto_now=True)
 
     class Meta:
-        db_table = "word_glossary"
-        verbose_name = "word"
-        verbose_name_plural = "words"
+        db_table = "user_glossary"
+        verbose_name = "vocabulary"
+        verbose_name_plural = "vocabularies"
 
     def __str__(self):
-        return self.word
+        return self.vocabulary
 
     def get_absolute_url(self):
-        return reverse("glossary_word_detail", kwargs={"pk": self.pk})
+        return reverse("glossary_detail", kwargs={"pk": self.pk})
 
 
-class GlossarySentence(models.Model):
-    sentence = models.CharField(max_length=5000)
-    source_language = models.CharField(max_length=5)
+class TransGlossary(models.Model):
+    translation = models.TextField(blank=True, null=True)
+    target_language = models.CharField(max_length=50)
+    vocabulary = models.ForeignKey(UserGlossary, on_delete=models.CASCADE)
+    source_language = models.CharField(max_length=50)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     deck = models.ForeignKey(UserDeck, on_delete=models.CASCADE)
-    tag = models.CharField(max_length=50, blank=True, null=True)
-    date = models.DateField(verbose_name="date added", auto_now=True)
 
     class Meta:
-        db_table = "sentence_glossary"
-        verbose_name = "sentence"
-        verbose_name_plural = "sentences"
+        db_table = "glossary_translations"
+        verbose_name = "translation"
+        verbose_name_plural = "translations"
 
     def __str__(self):
-        return self.sentence
+        return self.translation
 
     def get_absolute_url(self):
-        return reverse("glossary_sentence_detail", kwargs={"pk": self.pk})
-
-
-class TransWord(models.Model):
-    word_translation = models.CharField(max_length=500, blank=True)
-    target_language = models.CharField(max_length=2)
-    word = models.ForeignKey(GlossaryWord, on_delete=models.CASCADE)
-    source_language = models.CharField(max_length=5)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-
-    class Meta:
-        db_table = "word_translations_glossary"
-        verbose_name = "word translation"
-        verbose_name_plural = "words translations"
-
-    def __str__(self):
-        return self.word_translation
-
-    def get_absolute_url(self):
-        return reverse("word_translation_detail", kwargs={"pk": self.pk})
-
-
-class TransSentence(models.Model):
-    sentence_translation = models.TextField(blank=True)
-    target_language = models.CharField(max_length=5)
-    sentence = models.OneToOneField(GlossarySentence, on_delete=models.CASCADE)
-    source_language = models.CharField(max_length=5)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-
-    class Meta:
-        db_table = "sentence_translations_glossary"
-        verbose_name = "sentence translation"
-        verbose_name_plural = "sentences translations"
-
-    def __str__(self):
-        return self.sentence_translation
-
-    def get_absolute_url(self):
-        return reverse("sentence_translation_detail", kwargs={"pk": self.pk})
+        return reverse("glossary_translations_detail", kwargs={"pk": self.pk})
