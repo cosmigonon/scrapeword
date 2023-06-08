@@ -1,0 +1,17 @@
+{% extends "base.html" %} {% block content %}
+<div class="">
+  <aside role="complementary">
+    {% if deck.id == glossary.deck_id %}
+    <h1>{{ deck_name }}</h1>
+  </aside>
+</div>
+<div>
+  <ul>
+    {% endif %} {% for v in glossary %} {% if deck.id == glossary.deck_id %}
+    <li>{{ v.vocabulary }}</li>
+    {% else %}
+    <li><p>You have not added new vocabulary yet</p></li>
+    {% endif %} {% endfor %}
+  </ul>
+</div>
+{% endblock %}

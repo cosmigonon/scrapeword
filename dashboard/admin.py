@@ -1,12 +1,20 @@
 from django.contrib import admin
 from django.apps import apps
-from .models import *
+from .models import UserDeck, UserGlossary
 
 
-dashboard_models = apps.get_app_config("dashboard").get_models()
+class DeckAdmin(admin.ModelAdmin):
+    prepopulated_fields = {
+        "slug": (
+            "user",
+            "deck_name",
+        )
+    }
 
-for model in dashboard_models:
-    try:
-        admin.site.register(model)
-    except admin.sites.AlreadyRegistered:
-        pass
+
+class GlossaryAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"slug": ("vocabulary",)}
+
+
+admin.site.register(UserDeck, DeckAdmin)
+admin.site.register(UserGlossary, GlossaryAdmin)

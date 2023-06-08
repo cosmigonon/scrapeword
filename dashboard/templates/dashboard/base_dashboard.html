@@ -1,10 +1,12 @@
-{% extends "base.html" %} {% block content %}
-<h1>My vocabulary</h1>
+{% extends "base.html" %} {% block content %} 
+<h1>Welcome, {{ user.username }}!</h1>
 <ul>
-  {% for words in words_list %}
-  <li>{{ words.deck_id }} {{ words.source_language }}</li>
-  {% empty %}
-  <li>You have not added new vocabulary yet</li>
+  {% if deck  %}<h2>My vocabulary</h2>{% endif %}
+  {% for d in deck %}
+  <li><a href="{{ d.get_absolute_url }}">{{ d.deck_name }}</a></li>
+  {% empty %} 
+  <h1></h2>
+  <li>Guide</li>
   {% endfor %}
 </ul>
 {% endblock %}

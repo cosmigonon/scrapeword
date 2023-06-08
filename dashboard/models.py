@@ -22,16 +22,45 @@ class UserDeck(models.Model):
 
 
 class UserGlossary(models.Model):
+    GERMAN = "de"
+    GREEK = "el"
+    ENGLISH = "en"
+    SPANISH = "es"
+    FRENCH = "fr"
+    ITALIAN = "it"
+    JAPANESE = "ja"
+    PORTUGUESE = "pt"
+    RUSSIAN = "ru"
+    CHINESE = "zh"
+    LANGUAGE_CHOICES = [
+        (GERMAN, "German"),
+        (GREEK, "Greek"),
+        (ENGLISH, "English"),
+        (SPANISH, "Spanish"),
+        (FRENCH, "French"),
+        (ITALIAN, "Italian"),
+        (JAPANESE, "Japanese"),
+        (PORTUGUESE, "Portuguese"),
+        (RUSSIAN, "Russian"),
+        (CHINESE, "Chinese"),
+    ]
+
+    WORD = "w"
+    SENTENCE = "s"
+    CATEGORY_CHOICES = [
+        (WORD, "word"),
+        (SENTENCE, "sentence"),
+    ]
+
     vocabulary = models.CharField(max_length=5000)
-    source_language = models.CharField(max_length=50)
+    source_language = models.CharField(max_length=2, choices=LANGUAGE_CHOICES)
     translation = models.TextField(blank=True, null=True)
-    target_language = models.CharField(max_length=50)
+    target_language = models.CharField(max_length=2, choices=LANGUAGE_CHOICES)
     grammatical_category = models.CharField(max_length=50, blank=True, null=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     deck = models.ForeignKey(UserDeck, on_delete=models.CASCADE)
     tag = models.CharField(max_length=50, blank=True, null=True)
-    word = models.BooleanField(blank=True)
-    sentence = models.BooleanField(blank=True)
+    category = models.CharField(max_length=1, choices=CATEGORY_CHOICES, blank=True)
     date = models.DateField(verbose_name="date added", auto_now=True)
     slug = models.SlugField(null=False, unique=True)
 
@@ -45,23 +74,3 @@ class UserGlossary(models.Model):
 
     def get_absolute_url(self):
         return reverse("glossary_detail", kwargs={"slug": self.slug})
-
-
-class TransGlossary(models.Model):
-    translation = models.TextField(blank=True, null=True)
-    target_language = models.CharField(max_length=50)
-    vocabulary = models.ForeignKey(UserGlossary, on_delete=models.CASCADE)
-    source_language = models.CharField(max_length=50)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    deck = models.ForeignKey(UserDeck, on_delete=models.CASCADE)
-
-    class Meta:
-        db_table = "glossary_translations"
-        verbose_name = "translation"
-        verbose_name_plural = "translations"
-
-    def __str__(self):
-        return self.translation
-
-    def get_absolute_url(self):
-        return reverse("glossary_translations_detail", kwargs={"pk": self.pk})

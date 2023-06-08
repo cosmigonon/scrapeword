@@ -1,25 +1,22 @@
 from django.test import TestCase
-from dashboard.models import (
-    UserDeck,
-    GlossaryWord,
-    GlossarySentence,
-    TransWord,
-    TransSentence,
-)
+from django.contrib.auth import get_user_model
+from dashboard.models import UserDeck, UserGlossary
 
 
 class UserDeckTest(TestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.name = UserDeck.objects.create(deck_name="My portuguese vocabulary")
-        cls.template = UserDeck.objects.create(deck_template=" ")
-        cls.user = UserDeck.objects.create(user_id="Hermeto")
+        cls.user = get_user_model().objects.create(
+            username="testuser", email="test@email.com", password="supersecret_password"
+        )
+        cls.deck = UserDeck.objects.create(
+            deck_name="deck_test", deck_template="", user=cls.user
+        )
 
-    def test_model_content_deck_name(self):
-        self.assertEqual(self.name.deck_name, "My portuguese vocabulary")
 
-    def test_model_content_deck_template(self):
-        self.assertEqual(self.template.deck_template, " ")
-
-    def test_model_content_user_id(self):
-        self.assertEqual(self.user.user_id, "Hermeto")
+class UserGlossaryTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.vocab = UserGlossary.objects.create(
+            vocabulary="test sentence", source_language="en", target_language="pt"
+        user=cls.user)
