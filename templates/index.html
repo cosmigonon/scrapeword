@@ -7,40 +7,77 @@
     <title>Scrapeword</title>
   </head>
   <body>
-    <header>
-      <div class="logo-container">
-        <a href="#">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 190 35"
-            width="190"
-            height="35"
-          >
-            <text
-              x="0"
-              y="20"
-              style="font-family: 'Sono', sans-serif; font-size: 24"
-            >
-              Scrapeword
-            </text>
-          </svg>
-        </a>
-      </div>
-      <nav>
-        <ul>
-          <li><a href="#learn">How it Works</a></li>
-          <li><a href="{% url 'signup' %}">Sign up</a></li>
-        </ul>
-      </nav>
-    </header>
     <div>
-      <h1>Store your vocabulary in Scrapeword.</h1>
-      <p>
-        A fast and easy way to translate your new vocabulary with your favorite
-        translators and dictionaries.
-      </p>
+      <header role="banner">
+        <div class="logo-container" id="logo">
+          <a href="{% url 'index' %}">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 190 35"
+              width="190"
+              height="35"
+            >
+              <text
+                x="0"
+                y="20"
+                style="font-family: 'Sono', sans-serif; font-size: 24"
+              >
+                Scrapeword
+              </text>
+            </svg>
+          </a>
+        </div>
+        <nav role="navigation">
+          <ul>
+            <li><a href="{% url 'login' %}">Log in</a></li>
+            <li><a href="{% url 'signup' %}">Sign up</a></li>
+          </ul>
+        </nav>
+      </header>
     </div>
-    <footer>
+    <div clas="main-home-section-wrapper" id="main-slogan">
+      <section clas="main-home-section-wrapper">
+        <div class="main-home-section-header">
+          <h1 class="main-section-title">
+            Learn new vocabulary while doing what you love.
+          </h1>
+        </div>
+      </section>
+      <div>
+        <section clas="blockinfo-section-wrapper">
+          <div class="block-section-header">
+            <h2>
+              Scrapeword is a quick and easy way to save your new vocabulary in
+              one place. All with your favorite translators and dictionaries.
+            </h2>
+          </div>
+          <div>
+            <img role="presentation" src="" />
+          </div>
+        </section>
+      </div>
+      <section clas="blockinfo-section-wrapper">
+        <div class="block-section-header">
+          <h2 clas>Create decks and flashcards in a few steps</h2>
+        </div>
+        <p class="">
+          <img src="" />
+          An intuitive and user-friendly system, ready to integrate it with your
+          main activities.
+        </p>
+      </section>
+      <section clas="blockinfo-section-wrapper">
+        <div class="block-section-header">
+          <h2>Automatic translations on the fly</h2>
+        </div>
+      </section>
+      <section clas="blockinfo-section-wrapper">
+        <div class="block-section-header">
+          <h2>All in one place in the cloud</h2>
+        </div>
+      </section>
+    </div>
+    <footer role="conteninfo">
       <a href="https://github.com/cosmigonon" target="_blank"
         ><p><small> Designed & Built by Jhon J</small></p></a
       >

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scrapeword</title>
+  </head>
+  <body>
+    <div class="content-section">
+      <form method="post">
+        {% csrf_token %}
+        <fieldset class="form-group">
+          <legend class="border-bottom mb-4">
+            <h1>Sign up</h1>
+            <p>Create an account</p>
+            {{ form.as_p }}
+          </legend>
+        </fieldset>
+        <div>
+          <button type="submit">Sign Up</button>
+        </div>
+      </form>
+      <div>
+        <p>Already have an account? <a href="{% url 'login' %}">Log in</a></p>
+      </div>
+    </div>
+  </body>
+</html>
