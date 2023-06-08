@@ -1,19 +1,14 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib import messages
+from django.urls import reverse_lazy
+from django.views.generic.edit import CreateView
 from django.views.generic import TemplateView
 
+from .forms import CustomUserCreationForm
 
-def register(request):
-    if request == "POST":
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data.get("username")
-            messages.success(request, "Your account was successfully created")
-            return redirect("dashboard-home")
-    else:
-        form = UserCreationForm()
-    return render(request, "accounts/register.html", {"form": form})
+
+class SignUpView(CreateView):
+    form_class = CustomUserCreationForm
+    success_url = reverse_lazy("dashboard_home")
+    template_name = "registration/signup.html"
 
 
 class ProfileSettingsView(TemplateView):

@@ -16,8 +16,8 @@ class CustomUser(AbstractUser):
         verbose_name="user_bio", max_length=160, blank=True, null=True
     )
     location = models.CharField(max_length=50, blank=True, null=True)
-    is_staff = models.BooleanField(default=False)
-    is_superuser = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=False, blank=True)
+    is_superuser = models.BooleanField(default=False, blank=True)
     date_joined = models.DateTimeField(default=timezone.now)
 
     USERNAME_FIELD = "email"
